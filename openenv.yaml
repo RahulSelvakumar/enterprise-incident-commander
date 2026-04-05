@@ -1,0 +1,15 @@
+name: enterprise-incident-commander
+version: 1.0.0
+description: An RL environment where an agent acts as an Incident Commander, allocating tickets to departments under strict SLA limits.
+entrypoint: server.app:app
+
+tasks:
+  - id: triage-easy
+    description: Standard routing. Route 10 tickets without capacity limits.
+    difficulty: easy
+  - id: triage-medium
+    description: Load balancing. Route 20 tickets managing tight departmental capacity.
+    difficulty: medium
+  - id: triage-hard
+    description: Crisis management. Route 30 tickets, prioritizing VIPs to prevent SLA breaches.
+    difficulty: hard
