@@ -1,6 +1,6 @@
 from openenv.core.env_client import EnvClient
 from openenv.core.client_types import StepResult
-from models import TriageAction, TriageObservation, TriageState, Ticket, Department
+from .models import TriageAction, TriageObservation, TriageState, Ticket, Department
 
 class TicketTriageClient(EnvClient[TriageAction, TriageObservation, TriageState]):
     def _step_payload(self, action: TriageAction) -> dict:

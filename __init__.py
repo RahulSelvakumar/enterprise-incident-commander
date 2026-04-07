@@ -6,11 +6,11 @@
 
 """Ticket Triage Environment."""
 
-from .client import TicketTriageEnv
-from .models import TicketTriageAction, TicketTriageObservation
+from .client import TicketTriageClient
+from .models import TriageAction, TriageObservation
 
 __all__ = [
-    "TicketTriageAction",
-    "TicketTriageObservation",
-    "TicketTriageEnv",
+    "TriageAction",
+    "TriageObservation",
+    "TicketTriageClient",
 ]

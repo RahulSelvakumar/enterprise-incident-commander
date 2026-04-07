@@ -1,8 +1,7 @@
 import random
 import uuid
 from openenv.core.env_server import Environment
-
-from models import TriageAction, TriageObservation, TriageState, Ticket, Department
+from ticket_triage.models import TriageAction, TriageObservation, TriageState, Ticket, Department
 
 class TicketTriageEnvironment(Environment):
     SUPPORTS_CONCURRENT_SESSIONS = True

@@ -1,0 +1,7 @@
+openenv-core>=0.2.0
+uvicorn
+fastapi
+python-dotenv
+openenv==0.1.13
+openai
+pydantic
