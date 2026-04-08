@@ -1,7 +1,8 @@
 import random
 import uuid
+import os
 from openenv.core.env_server import Environment
-from ticket_triage.models import TriageAction, TriageObservation, TriageState, Ticket, Department
+from models import TriageAction, TriageObservation, TriageState, Ticket, Department
 
 class TicketTriageEnvironment(Environment):
     SUPPORTS_CONCURRENT_SESSIONS = True
@@ -11,16 +12,21 @@ class TicketTriageEnvironment(Environment):
         self._unassigned_tickets = []
         self._departments = []
 
-    def reset(self, seed=None, episode_id=None, task_id="triage-easy", **kwargs) -> TriageObservation:
-        if "hard" in task_id:
+    def reset(self, seed=None, episode_id=None, task_id=None, **kwargs) -> TriageObservation:
+        actual_task = task_id or kwargs.get("task_name") or os.getenv("TASK_NAME", "triage-easy")
+
+        if "hard" in actual_task:
             num_tickets, dept_capacity = 30, 8
             difficulty = "hard"
-        elif "medium" in task_id:
+            max_turns = 40
+        elif "medium" in actual_task:
             num_tickets, dept_capacity = 20, 5
             difficulty = "medium"
+            max_turns = 30
         else:
             num_tickets, dept_capacity = 10, 20
             difficulty = "easy"
+            max_turns = 20
 
         self._state = TriageState(
             episode_id=episode_id or str(uuid.uuid4()),
@@ -28,7 +34,7 @@ class TicketTriageEnvironment(Environment):
             total_initial_tickets=num_tickets,
             completed_tickets=0,
             task_difficulty=difficulty,
-            max_steps=20
+            max_steps=max_turns
         )
 
         self._departments = [
@@ -101,6 +107,13 @@ class TicketTriageEnvironment(Environment):
             message=msg
         )
 
+    # This is the property the framework was missing!
     @property
     def state(self) -> TriageState:
         return self._state
+
+
+# The generic grader class placed outside the environment class
+class IncidentGrader:
+    def grade(self, state: TriageState) -> float:
+        return float(state.completed_tickets)

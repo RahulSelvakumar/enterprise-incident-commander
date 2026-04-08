@@ -4,8 +4,8 @@ from fastapi.responses import HTMLResponse
 from openenv.core.env_server import create_fastapi_app
 
 # --- FIXED IMPORTS ---
-from ticket_triage.server.environment import TicketTriageEnvironment
-from ticket_triage.models import TriageAction, TriageObservation
+from server.environment import TicketTriageEnvironment
+from models import TriageAction, TriageObservation
 # ---------------------
 
 # 1. Initialize the OpenEnv FastAPI application
@@ -49,7 +49,7 @@ async def root_ui():
 
 # Required by the OpenEnv multi-mode deployment validator
 def main():
-    uvicorn.run("ticket_triage.server.app:app", host="0.0.0.0", port=7860, reload=False)
+    uvicorn.run("server.app:app", host="0.0.0.0", port=7860, reload=False)
 
 if __name__ == "__main__":
     main()
